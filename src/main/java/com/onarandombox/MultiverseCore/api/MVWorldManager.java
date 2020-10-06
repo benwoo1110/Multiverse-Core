@@ -158,18 +158,12 @@ public interface MVWorldManager {
     ChunkGenerator getChunkGenerator(String generator, String generatorID, String worldName);
 
     /**
-     * Returns a collection of all the worlds Multiverse knows about.
-     *
-     * @return A collection of {@link MultiverseWorld}.
-     */
-    Collection<MultiverseWorld> getMVWorlds();
-
-    /**
-     * Returns a list of all the worlds Multiverse knows about in alphabetical order.
+     * Returns a list of all the worlds Multiverse knows about.
      *
      * @return A list of {@link MultiverseWorld}.
      */
-    List<MultiverseWorld> getSortedMVWorlds();
+    Collection<MultiverseWorld> getMVWorlds();
+
 
     /**
      * Returns a {@link MultiverseWorld} if it exists, and null if it does not.
