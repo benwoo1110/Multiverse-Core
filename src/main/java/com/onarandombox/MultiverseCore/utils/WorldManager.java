@@ -140,7 +140,7 @@ public class WorldManager implements MVWorldManager {
 
         // Make sure the new world doesn't exist outside of multiverse.
         if (newWorldFile.exists()) {
-            Logging.warning("File for new world '%s' already exists", newName);
+            Logging.warning("Folder for new world '%s' already exists", newName);
             return false;
         }
 
@@ -162,14 +162,8 @@ public class WorldManager implements MVWorldManager {
         }
         
         // Grab a bit of metadata from the old world.
-        MVWorld oldWorld = (MVWorld) getMVWorld(oldName);
-        Environment environment = oldWorld.getEnvironment();
-        String seedString = oldWorld.getSeed() + "";
-        WorldType worldType = oldWorld.getWorldType();
-        Boolean generateStructures = oldWorld.getCBWorld().canGenerateStructures();
-        String generator = oldWorld.getGenerator();
-        boolean useSpawnAdjust = oldWorld.getAdjustSpawn();
-        
+        MultiverseWorld oldWorld = getMVWorld(oldName);
+
         // Don't need the loaded world anymore.
         if (wasJustLoaded) {
             this.unloadWorld(oldName, true);
@@ -525,6 +519,13 @@ public class WorldManager implements MVWorldManager {
      */
     @Override
     public boolean deleteWorld(String name, boolean removeFromConfig, boolean deleteWorldFolder) {
+        if (this.hasUnloadedWorld(name, false)) {
+            // Attempt to load if unloaded so we can actually delete the world
+            if (!this.doLoad(name)) {
+                return false;
+            }
+        }
+
         World world = this.plugin.getServer().getWorld(name);
         if (world == null) {
             // We can only delete loaded worlds
@@ -937,6 +938,9 @@ public class WorldManager implements MVWorldManager {
         return this.configWorlds;
     }
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public boolean hasUnloadedWorld(String name, boolean includeLoaded) {
 		if (getMVWorld(name) != null) {
