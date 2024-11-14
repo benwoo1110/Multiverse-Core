@@ -15,11 +15,24 @@ jobs:
         with:
           ref: ${{ inputs.target_tag }}
 
-      - name: Deploy JavaDoc 🚀
-        uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
+      - uses: actions/setup-java@v3
         with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      
+      - name: build javadoc
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean javadoc
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          javadoc-branch: javadoc
-          java-version: 11
+      
+      - name: deploy javadoc to gh pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: build/docs/javadoc
+          branch: javadoc
           target-folder: javadoc
-          project: gradle
+          commit-message: Released javadoc for ${{ inputs.target_tag }}
