@@ -43,4 +43,5 @@ jobs:
           folder: build/docs/javadoc-deploy
           branch: javadoc
           target-folder: javadoc
+          clean: false
           commit-message: Deploy javadoc for ${{ inputs.target_tag }}
