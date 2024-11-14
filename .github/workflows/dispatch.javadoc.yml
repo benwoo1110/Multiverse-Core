@@ -1,0 +1,24 @@
+name: 'Dispatch: Deploy Javadoc'
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_tag:
+        description: 'Version to generate javadoc'
+        required: true
+
+jobs:
+  javadocs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.target_tag }}
+
+      - uses: dev-vince/actions-publish-javadoc@v1.0.1
+        with:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              java-version: "11"
+              java-distribution: "adopt"
+              project: gradle
+              branch: "javadoc"
