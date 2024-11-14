@@ -15,10 +15,11 @@ jobs:
         with:
           ref: ${{ inputs.target_tag }}
 
-      - uses: dev-vince/actions-publish-javadoc@v1.0.1
+      - name: Deploy JavaDoc 🚀
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
         with:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              java-version: "11"
-              java-distribution: "adopt"
-              project: gradle
-              branch: "javadoc"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          javadoc-branch: javadoc
+          java-version: 11
+          target-folder: javadoc
+          project: gradle
