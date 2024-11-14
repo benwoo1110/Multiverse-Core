@@ -27,12 +27,14 @@ jobs:
           arguments: clean javadoc
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_VERSION: 
       
-      - name: deploy javadoc to gh pages
+      - name: Deploy javadoc to gh pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: build/docs/javadoc
           branch: javadoc
-          target-folder: javadoc
-          commit-message: Released javadoc for ${{ inputs.target_tag }}
+          target-folder: javadoc/${{ inputs.target_tag }}
+          commit-message: Deploy javadoc for ${{ inputs.target_tag }}
+  
