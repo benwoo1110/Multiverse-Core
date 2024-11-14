@@ -92,7 +92,7 @@ jobs:
 
       - name: Generate javadoc
         id: javadoc
-        if: steps.release.outputs.release_created == 'true' && steps.release.outputs.release_type == 'release'
+        if: !cancelled() && steps.release.outputs.release_created == 'true' && steps.release.outputs.release_type == 'release'
         uses: gradle/gradle-build-action@v2
         with:
           arguments: javadoc
@@ -101,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy javadoc to gh pages
-        if: steps.javadoc.outcome == 'success'
+        if: !cancelled() && steps.javadoc.outcome == 'success'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
