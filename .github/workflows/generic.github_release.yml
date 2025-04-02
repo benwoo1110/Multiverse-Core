@@ -72,10 +72,10 @@ jobs:
 
       - name: Publish package
         if: steps.release.outputs.release_created == 'true'
-        run: >
+        run: > 
           ./gradlew publish -x test
-            -PmultiverseUsername=${{ secrets.REPOSILITE_REPO_USERNAME }}
-            -PmultiversePassword=${{ secrets.REPOSILITE_REPO_PASSWORD }}
+          -PmultiverseUsername=${{ secrets.REPOSILITE_REPO_USERNAME }}
+          -PmultiversePassword=${{ secrets.REPOSILITE_REPO_PASSWORD }}
         env:
           GITHUB_VERSION: ${{ steps.release.outputs.publish_version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
