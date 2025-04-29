@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '21'
           distribution: 'adopt'
           cache: gradle
 
@@ -103,7 +103,7 @@ jobs:
           mkdir -p build/docs/javadoc-deploy/latest
           mkdir -p build/docs/javadoc-deploy/${{ steps.release.outputs.tag_name }}
           cp -r build/docs/javadoc/* build/docs/javadoc-deploy/latest
-          cp -r build/docs/javadoc/* build/docs/javadoc-deploy${{ steps.release.outputs.tag_name }}
+          cp -r build/docs/javadoc/* build/docs/javadoc-deploy/${{ steps.release.outputs.tag_name }}
 
       - name: Deploy javadoc to gh pages
         if: steps.javadoc.outcome == 'success'
